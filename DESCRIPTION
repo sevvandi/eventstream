@@ -1,0 +1,28 @@
+Package: eventstream
+Type: Package
+Title: An implementation of streaming events and their classification
+Version: 0.0.9000
+Author: Sevvandi Kandanaarachchi
+Maintainer: Sevvandi Kandanaarachchi <sevvandi.kandanaarachchi@monash.edu>
+Description: An implementation of streaming events and their early classification in R. 
+    It has the functionality to generate 2-dimensional data streams with events belonging to 
+    2 classes. These events can be extracted and features computed. The event features extracted
+    from incomplete-events can be classified using a partial-observations-classifier which includes
+    a L2 penalty. 
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    abind,
+    tensorA,
+    glmnet,
+    AtmRay,
+    dbscan,
+    MASS
+RoxygenNote: 6.1.0
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+Depends: 
+    R (>= 3.5.0)
