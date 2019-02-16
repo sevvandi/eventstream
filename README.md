@@ -5,7 +5,7 @@ eventstream
 
 [![Travis build status](https://travis-ci.org/sevvandi/eventstream.svg?branch=master)](https://travis-ci.org/sevvandi/eventstream)
 
-The goal of *eventstream* is to extract and classify events in data streams. For details see (Kandanaarachchi, Hyndman, and Smith-Miles 2018). The R scripts used in the paper are at <https://github.com/sevvandi/eventstream_paper> .
+The goal of *eventstream* is to extract and classify events in data streams. For details see (Kandanaarachchi, Hyndman, and Smith-Miles 2018). The R scripts used in this paper are at <https://github.com/sevvandi/eventstream_paper> .
 
 This package is still under development and this repository contains a development version of the R package *eventstream*.
 
