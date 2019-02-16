@@ -25,4 +25,4 @@ Suggests:
     rmarkdown
 VignetteBuilder: knitr
 Depends: 
-    R (>= 3.5.0)
+    R (>= 3.4.0)
