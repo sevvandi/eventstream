@@ -1,7 +1,7 @@
 Package: eventstream
 Type: Package
 Title: An implementation of streaming events and their classification
-Version: 0.0.9000
+Version: 1.0.0
 Author: Sevvandi Kandanaarachchi
 Maintainer: Sevvandi Kandanaarachchi <sevvandi.kandanaarachchi@monash.edu>
 Description: An implementation of streaming events and their early classification in R. 
