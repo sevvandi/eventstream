@@ -2,6 +2,7 @@ Package: eventstream
 Type: Package
 Title: An Implementation of Streaming Events and their Classification
 Version: 1.0.0
+Maintainer: Sevvandi Kandanaarachchi <sevvandi.kandanaarachchi@monash.edu>
 Authors@R: person("Sevvandi", "Kandanaarachchi", email = "sevvandi.kandanaarachchi@monash.edu",
   role = c("aut", "cre"))
 Description: An implementation of event extraction and classification in data streams in R. 
