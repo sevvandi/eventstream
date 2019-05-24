@@ -46,7 +46,7 @@
 #'
 #'@examples
 #'# 2D data stream example
-#' out <- gen_stream(2, sd=15)
+#' out <- gen_stream(1, sd=15)
 #' zz <- as.matrix(out$data)
 #' features <- extract_event_ftrs(zz, supervised=TRUE, details = out$details)
 #' features
