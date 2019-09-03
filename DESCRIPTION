@@ -1,15 +1,15 @@
 Package: eventstream
 Type: Package
-Title: An Implementation of Streaming Events and their Classification
+Title: Implements Streaming Events and their Early Classification
 Version: 1.0.0
-Maintainer: Sevvandi Kandanaarachchi <sevvandi.kandanaarachchi@monash.edu>
-Authors@R: person("Sevvandi", "Kandanaarachchi", email = "sevvandi.kandanaarachchi@monash.edu",
-  role = c("aut", "cre"))
-Description: An implementation of event extraction and classification in data streams in R. 
+Maintainer: Sevvandi Kandanaarachchi <sevvandik@gmail.com>
+Authors@R: person("Sevvandi", "Kandanaarachchi", email = "sevvandik@gmail.com",
+  role = c("aut", "cre"), comment = c(ORCID = "0000-0002-0337-0395"))
+Description: Implements event extraction and early classification in data streams in R. 
     It has the functionality to generate 2-dimensional data streams with events belonging to 
     2 classes. These events can be extracted and features computed. The event features extracted
-    from incomplete-events can be classified using a partial-observations-classifier which includes
-    a L2 penalty. 
+    from incomplete-events can be classified using a partial-observations-classifier 
+    (Kandanaarachchi et al. 2018)<doi:10.13140/RG.2.2.10051.25129>. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
