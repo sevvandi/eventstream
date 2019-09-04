@@ -5,7 +5,7 @@ Version: 1.0.0
 Maintainer: Sevvandi Kandanaarachchi <sevvandik@gmail.com>
 Authors@R: person("Sevvandi", "Kandanaarachchi", email = "sevvandik@gmail.com",
   role = c("aut", "cre"), comment = c(ORCID = "0000-0002-0337-0395"))
-Description: Implements event extraction and early classification in data streams in R. 
+Description: Implements event extraction and early classification of events in data streams in R. 
     It has the functionality to generate 2-dimensional data streams with events belonging to 
     2 classes. These events can be extracted and features computed. The event features extracted
     from incomplete-events can be classified using a partial-observations-classifier 
