@@ -11,7 +11,7 @@
 
 }}
 \source{
-\url{ftp://neoftp.sci.gsfc.nasa.gov/csv/AURA_NO2_M/}
+\url{https://neo.sci.gsfc.nasa.gov/view.php?datasetId=AURA_NO2_M}
 }
 \usage{
 NO2_2018
