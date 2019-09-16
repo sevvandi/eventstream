@@ -223,7 +223,7 @@ get_class_labels <- function(features.this.chunk, start, end, All.details){
 #'clst <- get_clusters(zz, vis=TRUE)
 #'
 #'@export
-get_clusters <- function(dat, flag="N", filename="Nothing", thres=0.95, vis=FALSE, epsilon =5, miniPts = 10){
+get_clusters <- function(dat, flag="N", filename="Nothing", thres=0.95, vis=FALSE, epsilon =5, miniPts = 10, rolling=TRUE){
   dat.x <- 1:dim(dat)[2]
   dat.y <- 1:dim(dat)[1]
   mesh.xy <- AtmRay::meshgrid(dat.x,dat.y)
@@ -260,7 +260,8 @@ get_clusters <- function(dat, flag="N", filename="Nothing", thres=0.95, vis=FALS
   output <- list()
   xyz.high.xy.2 <- xyz.high.xy[res$cluster!=0,]
   res.cluster.2 <- res$cluster[res$cluster!=0]
-  if(min(xyz.high.xy.2[,2]) < 5){
+  ##  Added rolling  window condition
+  if(rolling &  min(xyz.high.xy.2[,2]) < 5){
     # a cluster is at the start of the window
     rm.clust <- res.cluster.2[which.min(xyz.high.xy.2[,2])]
     inds <- res$cluster==rm.clust
