@@ -19,7 +19,8 @@ Imports:
     glmnet,
     AtmRay,
     dbscan,
-    MASS
+    MASS,
+    changepoint
 RoxygenNote: 6.1.1
 Suggests: 
     knitr,

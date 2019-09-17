@@ -5,7 +5,7 @@
 \title{Extracts events from a two-dimensional data stream}
 \usage{
 get_clusters(dat, flag = "N", filename = "Nothing", thres = 0.95,
-  vis = FALSE, epsilon = 5, miniPts = 10)
+  vis = FALSE, epsilon = 5, miniPts = 10, rolling = TRUE)
 }
 \arguments{
 \item{dat}{The data matrix}
@@ -21,6 +21,8 @@ get_clusters(dat, flag = "N", filename = "Nothing", thres = 0.95,
 \item{epsilon}{The \code{eps} parameter in \code{dbscan} function in the package \code{dbscan}}
 
 \item{miniPts}{The \code{minPts} parameter in \code{dbscan} function in the package \code{dbscan}}
+
+\item{rolling}{This parameter is set to \code{TRUE} if rolling windows are considered.}
 }
 \value{
 A list with following components

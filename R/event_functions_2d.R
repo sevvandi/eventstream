@@ -216,6 +216,7 @@ get_class_labels <- function(features.this.chunk, start, end, All.details){
 #'@param dat The data matrix
 #'@param flag If \code{Y}, then  event images  are saved as jpeg files.
 #'@param filename The name of the file of the event images.
+#'@param rolling This parameter is set to \code{TRUE} if rolling windows are considered. 
 #'@inherit extract_event_ftrs
 #'@return A list with following components
 #'\item{\code{clusters}}{The cluster assignment according to DBSCAN output.}
@@ -236,16 +237,16 @@ get_clusters <- function(dat, flag="N", filename="Nothing", thres=0.95, vis=FALS
   chg_pts1 <- c()
   for(i in 1:num_pca){
     y <- pc_dat1$x[,i]
-    ansvar1=cpt.meanvar(y, method="PELT")
-    chg_pts1 <- unique(c(chg_pts1, cpts(ansvar1) ))
+    ansvar1=changepoint::cpt.meanvar(y, method="PELT")
+    chg_pts1 <- unique(c(chg_pts1, changepoint::cpts(ansvar1) ))
   }
   
   pc_dat2 <- prcomp(t(dat), scale=FALSE, center = TRUE)
   chg_pts2 <- c()
   for(i in 1:num_pca){
     y <- pc_dat2$x[,i]
-    ansvar2=cpt.meanvar(y, method="PELT")
-    chg_pts2 <- unique(c(chg_pts2, cpts(ansvar2) ))
+    ansvar2=changepoint::cpt.meanvar(y, method="PELT")
+    chg_pts2 <- unique(c(chg_pts2, changepoint::cpts(ansvar2) ))
   }
   
   clusts <- unique(events$clusters[[1]])

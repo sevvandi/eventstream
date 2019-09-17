@@ -64,7 +64,7 @@
 #'@importFrom graphics axis hist image par plot title
 #'@importFrom stats IQR aggregate binomial coef glm lm median optim predict quantile rnorm runif sd smooth.spline
 #'@importFrom utils read.csv write.csv
-#'@importFrom stats cor model.matrix
+#'@importFrom stats cor model.matrix prcomp
 
 extract_event_ftrs <- function(stream, supervised=FALSE, details=NULL, win_size=200, step_size=20, thres=0.95, save=FALSE, folder="None", vis=FALSE, tt=10, epsilon =5, miniPts = 10){
 
