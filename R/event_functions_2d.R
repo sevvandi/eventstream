@@ -6,9 +6,13 @@ extract_events <- function(dat,flag="N", filename="nothing", thres, vis=TRUE, tt
   ll <-  max( ceiling(dim(dat)[1]/5), min( 20, dim(dat)[1] ) )
   normal.stats.splines <- spline_stats(dat[1:ll,])
 
+  if(dim(output$data)[1]!=0){
+    # Compute features
+    all.basic.features.1 <- get_features(xyz.high, cluster.all$cluster, normal.stats.splines, dim(dat)[1], tt)
+  }else{
+    all.basic.features.1 <- NULL
+  }
 
-  # Compute features
-  all.basic.features.1 <- get_features(xyz.high, cluster.all$cluster, normal.stats.splines, dim(dat)[1], tt)
   return(all.basic.features.1)
 }
 
@@ -224,6 +228,96 @@ get_class_labels <- function(features.this.chunk, start, end, All.details){
 #'
 #'@export
 get_clusters <- function(dat, flag="N", filename="Nothing", thres=0.95, vis=FALSE, epsilon =5, miniPts = 10, rolling=TRUE){
+  events <- get_clusters_2(dat, flag=flag, filename=filename, thres=thres, vis=FALSE, epsilon =epsilon, miniPts = miniPts, rolling=rolling)
+  
+  num_pca=1 
+  
+  pc_dat1 <- prcomp(dat, scale=FALSE, center = TRUE)
+  chg_pts1 <- c()
+  for(i in 1:num_pca){
+    y <- pc_dat1$x[,i]
+    ansvar1=cpt.meanvar(y, method="PELT")
+    chg_pts1 <- unique(c(chg_pts1, cpts(ansvar1) ))
+  }
+  
+  pc_dat2 <- prcomp(t(dat), scale=FALSE, center = TRUE)
+  chg_pts2 <- c()
+  for(i in 1:num_pca){
+    y <- pc_dat2$x[,i]
+    ansvar2=cpt.meanvar(y, method="PELT")
+    chg_pts2 <- unique(c(chg_pts2, cpts(ansvar2) ))
+  }
+  
+  clusts <- unique(events$clusters[[1]])
+  clust_chng <- c()
+  
+  if(length(chg_pts1) >0 & (length(chg_pts2 >0)) ){
+    for(i in 1:length(clusts)){
+      if(clusts[[i]]!=0){
+        inds1 <- which(events$clusters[[1]] == clusts[[i]])
+        for(j in 1:length(chg_pts1)){
+          for(k in 1:length(chg_pts2)){
+            condition <- (min(abs(events$data[inds1,1] - chg_pts2[k]))<5) |(min(abs(events$data[inds1,2] - chg_pts1[j]))<5)
+            if(condition){
+              clust_chng <- c(clust_chng, clusts[[i]])
+            }
+          }
+        }
+      } 
+    }
+  }else if(length(chg_pts1) >0 & (length(chg_pts2 ==0))){
+    for(i in 1:length(clusts)){
+      if(clusts[[i]]!=0){
+        inds1 <- which(events$clusters[[1]] == clusts[[i]])
+        for(j in 1:length(chg_pts1)){
+          condition <- (min(abs(events$data[inds1,2] - chg_pts1[j]))<5) 
+          if(condition){
+            clust_chng <- c(clust_chng, clusts[[i]])
+          }
+        }
+      } 
+    }
+  }else if(length(chg_pts2) >0 & (length(chg_pts1 ==0))){
+    for(i in 1:length(clusts)){
+      if(clusts[[i]]!=0){
+        inds1 <- which(events$clusters[[1]] == clusts[[i]])
+        for(j in 1:length(chg_pts2)){
+          condition <- (min(abs(events$data[inds1,1] - chg_pts2[j]))<5) 
+          if(condition){
+            clust_chng <- c(clust_chng, clusts[[i]])
+          }
+        }
+      }
+    }
+  }
+
+  clust_chng <- unique(clust_chng)
+  inds2 <- which(events$clusters$cluster %in% clust_chng)
+  events2 <- events
+  # events2$clusters <- 0
+  # events2$clusters$cluster <- 0
+  # events2$data <- 0
+  events2$clusters$cluster <- events$clusters$cluster[inds2]
+  events2$data <- events$data[inds2 , ]
+  colnames(events2$data) <- c("Location","Time", "Value")
+  
+  if(vis){
+    par(pty="s", mfrow=c(1,2))
+    dat <- as.matrix(dat)
+    image(1:dim(dat)[1], 1:dim(dat)[2],dat,col = topo.colors(100),axes=FALSE, xlab="Dimension 1", ylab="Dimension 2")
+    axis(1, at = seq(10, dim(dat)[1], by = 10))
+    axis(2, at = seq(50, dim(dat)[2], by = 50))
+    title(main = "Original", font.main = 2)
+    plot(events2$data[events2$clusters$cluster!=0,c(2,1)], col=events2$clusters$cluster +1L, pch=19, xlim=c(0,dim(dat)[1]), ylim=c(0,dim(dat)[2]), xlab="Dimension 1", ylab="Dimension 2", main="Events"  )
+    
+  }
+  
+  return(events2)
+}
+
+
+
+get_clusters_2 <- function(dat, flag="N", filename="Nothing", thres=0.95, vis=FALSE, epsilon =5, miniPts = 10, rolling=TRUE){
   dat.x <- 1:dim(dat)[2]
   dat.y <- 1:dim(dat)[1]
   mesh.xy <- AtmRay::meshgrid(dat.x,dat.y)

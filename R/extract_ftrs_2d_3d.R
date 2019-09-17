@@ -101,16 +101,19 @@ extract_event_ftrs_2d <- function(stream, supervised, details, win_size, step_si
       dlm_feat <- extract_events(win_dat, "N", file_name, thres, vis, tt, epsilon, miniPts)
     }
 
-    if(dim(dlm_feat)[1]>0){
-      if(supervised){
-        dlm_feat <-   get_class_labels(dlm_feat, win_st, win_en, details)
-      }
-      if((jj==1)|(!exists('all_train_features'))){
-        all_train_features <- dlm_feat
-      }else{
-        all_train_features <- abind::abind(all_train_features,dlm_feat, along=1)
+    if(!is.null(dlm_feat)){
+      if(dim(dlm_feat)[1]>0){
+        if(supervised){
+          dlm_feat <-   get_class_labels(dlm_feat, win_st, win_en, details)
+        }
+        if((jj==1)|(!exists('all_train_features'))){
+          all_train_features <- dlm_feat
+        }else{
+          all_train_features <- abind::abind(all_train_features,dlm_feat, along=1)
+        }
       }
     }
+ 
     ## Update start and end indices
     win_st <- win_st + step_size
     win_en <- min(win_en + step_size, dim(stream)[1])
