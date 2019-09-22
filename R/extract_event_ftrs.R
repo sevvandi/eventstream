@@ -14,6 +14,7 @@
 #'@param tt Related to event ages. For example if \code{tt=10} then the event ages are \code{10, 20, 30} and \code{40}.
 #'@param epsilon The \code{eps} parameter in \code{dbscan} function in the package \code{dbscan}
 #'@param miniPts The \code{minPts} parameter in \code{dbscan} function in the package \code{dbscan}
+#'@param rolling This parameter is set to \code{TRUE} if rolling windows are considered. 
 #'
 #'
 #'@return
@@ -66,11 +67,11 @@
 #'@importFrom utils read.csv write.csv
 #'@importFrom stats cor model.matrix prcomp
 
-extract_event_ftrs <- function(stream, supervised=FALSE, details=NULL, win_size=200, step_size=20, thres=0.95, save=FALSE, folder="None", vis=FALSE, tt=10, epsilon =5, miniPts = 10){
+extract_event_ftrs <- function(stream, supervised=FALSE, details=NULL, win_size=200, step_size=20, thres=0.95, save=FALSE, folder="None", vis=FALSE, tt=10, epsilon =5, miniPts = 10, rolling=TRUE){
 
   array_dim <- length(dim(stream))
   if(array_dim==2){
-    all_train_features <- extract_event_ftrs_2d(stream, supervised, details, win_size, step_size, thres, save, folder, vis, tt, epsilon, miniPts  )
+    all_train_features <- extract_event_ftrs_2d(stream, supervised, details, win_size, step_size, thres, save, folder, vis, tt, epsilon, miniPts, rolling=rolling  )
   }else if(array_dim==3){
     all_train_features <- extract_event_ftrs_3d(stream, supervised, details, win_size, step_size, thres, save, folder, vis, tt, epsilon, miniPts)
   }else{

@@ -78,7 +78,7 @@ extract_event_ftrs_3d <- function(stream, supervised=FALSE, details=NULL, win_si
 
 ######################################################################################
 
-extract_event_ftrs_2d <- function(stream, supervised, details, win_size, step_size, thres, save, folder, vis, tt, epsilon, miniPts){
+extract_event_ftrs_2d <- function(stream, supervised, details, win_size, step_size, thres, save, folder, vis, tt, epsilon, miniPts, rolling=TRUE){
 
   if(supervised){
     if( is.null(details) ){
@@ -96,9 +96,9 @@ extract_event_ftrs_2d <- function(stream, supervised, details, win_size, step_si
     if(save){
       file_name <- paste(folder, "Events_", 100000+jj, ".jpg", sep="")
       #file_name <- paste(folder, "Events_", 100000+jj, ".pdf", sep="")
-      dlm_feat <- extract_events(win_dat, "Y", file_name, thres, vis, tt, epsilon, miniPts)
+      dlm_feat <- extract_events(win_dat, "Y", file_name, thres, vis, tt, epsilon, miniPts, rolling=rolling)
     }else{
-      dlm_feat <- extract_events(win_dat, "N", file_name, thres, vis, tt, epsilon, miniPts)
+      dlm_feat <- extract_events(win_dat, "N", file_name, thres, vis, tt, epsilon, miniPts, rolling=rolling)
     }
 
     if(!is.null(dlm_feat)){

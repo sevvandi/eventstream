@@ -7,7 +7,7 @@
 extract_event_ftrs(stream, supervised = FALSE, details = NULL,
   win_size = 200, step_size = 20, thres = 0.95, save = FALSE,
   folder = "None", vis = FALSE, tt = 10, epsilon = 5,
-  miniPts = 10)
+  miniPts = 10, rolling = TRUE)
 }
 \arguments{
 \item{stream}{A data stream. This can be the output of either the \code{gen_stream} function or the \code{stream_from_files} function.}
@@ -33,6 +33,8 @@ extract_event_ftrs(stream, supervised = FALSE, details = NULL,
 \item{epsilon}{The \code{eps} parameter in \code{dbscan} function in the package \code{dbscan}}
 
 \item{miniPts}{The \code{minPts} parameter in \code{dbscan} function in the package \code{dbscan}}
+
+\item{rolling}{This parameter is set to \code{TRUE} if rolling windows are considered.}
 }
 \value{
 An \code{Nx22x4} array  is returned for 2D data streams and an \code{Nx13x4} array for 3D data streams. Here \code{N} is the total number of  events extracted from all windows. The second dimension has \code{m} features and the class label for the \code{supervised} setting.  The third dimension has \code{4} different event ages : \code{tt, 2tt, 3tt, 4tt}.

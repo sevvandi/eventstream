@@ -1,6 +1,6 @@
-extract_events <- function(dat,flag="N", filename="nothing", thres, vis=TRUE, tt=10, epsilon=5, miniPts=10){
+extract_events <- function(dat,flag="N", filename="nothing", thres, vis=TRUE, tt=10, epsilon=5, miniPts=10, rolling=TRUE){
   # Cluster Data
-  output <- get_clusters(dat, flag, filename, thres, vis, epsilon, miniPts)
+  output <- get_clusters(dat, flag, filename, thres, vis, epsilon, miniPts, rolling=rolling)
   cluster.all <- output$clusters
   xyz.high <- output$data
   ll <-  max( ceiling(dim(dat)[1]/5), min( 20, dim(dat)[1] ) )
