@@ -35,6 +35,9 @@ extract_events_3d <- function(dat,flag="N", filename="nothing", thres, vis=TRUE,
 #'   \item{\code{centroid_z}}{z coordinate of event centroid.}
 #'   \item{\code{mean}}{Mean value of event pixels.}
 #'   \item{\code{std_dev}}{Standard deviation of event pixels.}
+#'   \item{\code{slope}}{Slope of a linear model fitted to the event.}
+#'   \item{\code{quad1}}{First coefficient of a quadratic model fitted to the event.}
+#'   \item{\code{quad2}}{Second coefficient of a quadratic model fitted to the event.}
 #'   \item{\code{sd_from_mean}}{Let us denote the 80th percentile of the event pixels value by \code{x}. How many  standard deviations is \code{x} is away from the mean? }
 #'
 #'@examples
@@ -47,7 +50,7 @@ extract_events_3d <- function(dat,flag="N", filename="nothing", thres, vis=TRUE,
 #' ftrs <- get_features_3d(out$data, out$cluster$cluster, mean_sd, win_size=40, tt=2 )
 #'@export
 get_features_3d  <- function(dat.xyz, res.cluster, normal.stats, win_size, tt){
-  n=14
+  n=17
   num.clusters <- ifelse(0 %in% res.cluster,(length(unique(res.cluster))-1), length(unique(res.cluster)))
 
   agg.gr <- aggregate(dat.xyz[,1], by =list(res.cluster), function(x) max(x)-min(x)+1)
@@ -83,7 +86,7 @@ get_features_3d  <- function(dat.xyz, res.cluster, normal.stats, win_size, tt){
 
     }
   }
-  dimnames(feature.vector)[[2]]<- c("cluster_id",  "pixels","length","width", "height", "total_value", "l2w_ratio", "centroid_x", "centroid_y", "centroid_z", "mean", "std_dev",  "sd_from_global_mean", "Class")
+  dimnames(feature.vector)[[2]]<- c("cluster_id",  "pixels","length","width", "height", "total_value", "l2w_ratio", "centroid_x", "centroid_y", "centroid_z", "mean", "std_dev", "slope", "quad1", "quad2", "sd_from_global_mean", "Class")
   return(feature.vector)
 }
 
@@ -106,6 +109,21 @@ get_features_per_cluster_3d <- function(dat, normal.stats){  # normal.stats.spli
   features$cluster.centroid <- data.frame( mean(dat[,1]),mean(dat[,2]),mean(dat[,3]) )
   features$mean.val <- mean(dat[,4])
   features$sd <- sd(dat[,4])
+  agg.vals <- aggregate(dat, by=list(dat[,1]), FUN=mean, na.rm=TRUE)
+  if(length(agg.vals[,4])>1){
+    mod1 <- lm(agg.vals[,5]~agg.vals[,1])
+    features$avg.slope <- mod1$coefficients[2]
+  }else{
+    features$avg.slope <- 0
+  }
+  if(length(agg.vals[,5])>2){
+    mod2 <- lm(agg.vals[ ,5]~poly(agg.vals[ ,1],2))
+    features$quad.1 <- mod2$coefficients[2]
+    features$quad.2 <- mod2$coefficients[3]
+  }else{
+    features$quad.1 <- 0
+    features$quad.2 <- 0
+  }
 
   features$num.sd.from.global.mean  <- max((quantile(dat[,3],0.8) - mean.z)/sd.z,0)
   return(features)

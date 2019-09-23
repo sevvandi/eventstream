@@ -31,6 +31,9 @@ For example, the element at \code{[10,6,3]} has the 6th feature,   of the 10th e
   \item{\code{centroid_z}}{z coordinate of event centroid.}
   \item{\code{mean}}{Mean value of event pixels.}
   \item{\code{std_dev}}{Standard deviation of event pixels.}
+  \item{\code{slope}}{Slope of a linear model fitted to the event.}
+  \item{\code{quad1}}{First coefficient of a quadratic model fitted to the event.}
+  \item{\code{quad2}}{Second coefficient of a quadratic model fitted to the event.}
   \item{\code{sd_from_mean}}{Let us denote the 80th percentile of the event pixels value by \code{x}. How many  standard deviations is \code{x} is away from the mean? }
 }
 \description{
