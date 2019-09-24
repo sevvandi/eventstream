@@ -3,12 +3,16 @@ extract_events_3d <- function(dat,flag="N", filename="nothing", thres, vis=TRUE,
   output <- get_clusters_3d(dat, flag, filename, thres, vis, epsilon, miniPts)
   cluster.all <- output$clusters
   xyz.high <- output$data
-  ll <- ceiling(dim(dat)[1]/5)
-  normal.stats <- stats_3d(dat[1:ll,,])
+  if(dim(output$data)[1] >0){
+    ll <- ceiling(dim(dat)[1]/5)
+    normal.stats <- stats_3d(dat[1:ll,,])
 
+        # Compute features
+    all.basic.features.1 <- get_features_3d(xyz.high, cluster.all$cluster , normal.stats, dim(dat)[1], tt)
+  }else{
+    all.basic.features.1 <- NULL
+  }
 
-  # Compute features
-  all.basic.features.1 <- get_features_3d(xyz.high, cluster.all$cluster , normal.stats, dim(dat)[1], tt)
   return(all.basic.features.1)
 }
 
@@ -210,6 +214,85 @@ get_class_labels_3d <- function(features.this.chunk, start, end, All.details){
 
 #'@export
 get_clusters_3d <- function(dat, flag, filename="Nothing", thres=0.95, vis=FALSE, epsilon = 3, miniPts = 15){
+  events <- get_clusters_3d_2(dat, flag, filename="Nothing", thres=thres, vis=vis, epsilon = epsilon, miniPts = miniPts)
+  dat_avg_1 <- apply(dat, 1:2, mean)  
+  dat_avg_2 <- apply(dat, 2:3, mean)
+
+  num_pca <- 1
+  pc_dat1 <- prcomp(dat_avg_1, scale=FALSE, center = TRUE)
+  chg_pts1 <- c()
+  for(i in 1:num_pca){
+    y <- pc_dat1$x[,i]
+    ansvar1=changepoint::cpt.meanvar(y, method="PELT")
+    chg_pts1 <- unique(c(chg_pts1, changepoint::cpts(ansvar1) ))
+  }
+  
+  pc_dat2 <- prcomp(t(dat_avg_1), scale=FALSE, center = TRUE)
+  chg_pts2 <- c()
+  for(i in 1:num_pca){
+    y <- pc_dat2$x[,i]
+    ansvar2=changepoint::cpt.meanvar(y, method="PELT")
+    chg_pts2 <- unique(c(chg_pts2, changepoint::cpts(ansvar2) ))
+  }
+  pc_dat3 <- prcomp(t(dat_avg_2), scale=FALSE, center = TRUE)
+  chg_pts3 <- c()
+  for(i in 1:num_pca){
+    y <- pc_dat3$x[,i]
+    ansvar3=changepoint::cpt.meanvar(y, method="PELT")
+    chg_pts3 <- unique(c(chg_pts3, changepoint::cpts(ansvar3) ))
+  }
+  
+  clusts <- unique(events$clusters[[1]])
+  clust_chng <- c()
+  
+  for(kk in 1:length(clusts)){
+    if(clusts[[kk]]!=0){
+      inds1 <- which(events$clusters[[1]] == clusts[[kk]])
+      if(length(chg_pts1) >0){
+        for(jj in 1:length(chg_pts1)){
+          condition <- ( min(abs(events$data[inds1,1] - chg_pts1[jj]))<5 ) 
+          if(condition){
+            clust_chng <- c(clust_chng, clusts[[kk]])
+          }
+        }
+      }
+      if(length(chg_pts2) >0){
+        for(jj in 1:length(chg_pts2)){
+          condition <- ( min(abs(events$data[inds1,2] - chg_pts2[jj]))<5 ) 
+          if(condition){
+            clust_chng <- c(clust_chng, clusts[[kk]])
+          }
+        }
+      }
+      if(length(chg_pts3) >0){
+        for(jj in 1:length(chg_pts3)){
+          condition <- ( min(abs(events$data[inds1,3] - chg_pts3[jj]))<5 ) 
+          if(condition){
+            clust_chng <- c(clust_chng, clusts[[kk]])
+          }
+        }
+      }
+      
+    }
+  }
+  clust_chng <- unique(clust_chng)
+  inds2 <- which(events$clusters$cluster %in% clust_chng)
+  events2 <- events
+  events2$clusters$cluster <- events$clusters$cluster[inds2]
+  events2$data <- events$data[inds2 , ]
+  colnames(events2$data) <- c("Time","X", "Y", "Value")
+  return(events2)
+}
+
+
+
+
+
+
+
+
+
+get_clusters_3d_2 <- function(dat, flag, filename="Nothing", thres=0.95, vis=FALSE, epsilon = 3, miniPts = 15){
   dat.x <- 1:dim(dat)[1]
   dat.y <- 1:dim(dat)[2]
   dat.z <- 1:dim(dat)[3]
