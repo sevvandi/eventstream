@@ -97,10 +97,10 @@ get_features_per_cluster <- function(dat,normal.stats.splines){
   features$mean.val <- mean(dat[,3])
   features$sd <- sd(dat[,3])
   agg.vals <- aggregate(dat, by=list(dat[,1]), FUN=mean, na.rm=TRUE)
-  mod1 <- lm(agg.vals[,3]~agg.vals[,1])
+  mod1 <- lm(agg.vals[,4]~agg.vals[,1])
   features$avg.slope <- mod1$coefficients[2]
-  if(length(agg.vals[,3])>2){
-    mod2 <- lm(agg.vals[,3]~poly(agg.vals[,1],2))
+  if(length(agg.vals[,4])>2){
+    mod2 <- lm(agg.vals[,4]~poly(agg.vals[,1],2))
     features$quad.1 <- mod2$coefficients[2]
     features$quad.2 <- mod2$coefficients[3]
   }else{
