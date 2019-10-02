@@ -46,15 +46,13 @@ extract_event_ftrs_3d <- function(stream, supervised=FALSE, details=NULL, win_si
     win_st <- win_st + step_size
     win_en <- min(win_en + step_size, dim(stream)[1])
   }
-  if(exists("all_train_features")){
-    if(!supervised){
-      class_col <- dim(all_train_features)[2]
-      all_train_features <- all_train_features[,-class_col,]
-    }
-  }else{
+  if(!exists("all_train_features")){
+    # if(!supervised){
+    #   class_col <- dim(all_train_features)[2]
+    #   all_train_features <- all_train_features[,-class_col,]
+    # }
     all_train_features <- NULL
   }
-
   return(all_train_features)
 
 }
