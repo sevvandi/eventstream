@@ -9,7 +9,7 @@ Description: Implements event extraction and early classification of events in d
     It has the functionality to generate 2-dimensional data streams with events belonging to 
     2 classes. These events can be extracted and features computed. The event features extracted
     from incomplete-events can be classified using a partial-observations-classifier 
-    (Kandanaarachchi et al. 2018)<doi:10.13140/RG.2.2.10051.25129>. 
+    (Kandanaarachchi et al. 2018) <doi:10.13140/RG.2.2.10051.25129>. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
