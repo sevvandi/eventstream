@@ -25,13 +25,12 @@
 #' Z <- 1*(Zstar > 0)
 #'
 #' # Plot data for t=1 and t=8
-#' old <- par()
-#' par(mfrow=c(1,2))
+#' oldpar <- par(mfrow=c(1,2))
 #' plot(X[t==1],Z[t==1], main="t=1 data")
 #' abline(v=-1, lty=2)
 #' plot(X[t==8],Z[t==8],main="t=8 data")
 #' abline(v=-8, lty=2)
-#' par(mfrow=old$mfrow)
+#' par(oldpar)
 #'
 #' # Fit model
 #' train_inds <-  c()

@@ -207,10 +207,11 @@ get_class_labels_3d <- function(features.this.chunk, start, end, All.details){
 #' # getting events
 #' out <- get_clusters_3d(arr, "N", "Nothing", thres=0.985, FALSE)
 #' # plots
-#' par(mfrow=c(1,3))
+#' oldpar <- par(mfrow=c(1,3))
 #' plot(out$data[,c(1,2)], xlab="x", ylab="y", col=as.factor(out$clusters$cluster))
 #' plot(out$data[,c(1,3)], xlab="x", ylab="z",col=as.factor(out$clusters$cluster))
 #' plot(out$data[,c(2,3)], xlab="y", ylab="z",col=as.factor(out$clusters$cluster))
+#' on.exit(par(oldpar)) 
 
 #'@export
 get_clusters_3d <- function(dat, flag, filename="Nothing", thres=0.95, vis=FALSE, epsilon = 3, miniPts = 15){
@@ -303,28 +304,6 @@ get_clusters_3d_2 <- function(dat, flag, filename="Nothing", thres=0.95, vis=FAL
   xyz.high <- xyz.dat[xyz.dat[,4] >= quantile.int,]
   xyz.high.xyz <- xyz.high[,1:3]
   res <- dbscan::dbscan(xyz.high.xyz, eps = epsilon, minPts = miniPts) # eps = 3, minPts = 7 # with previous work
-  # if(flag=="Y"){
-  #   jpeg(filename,width = 750, height = 600, quality=100)
-  #   par(pty="s", mfrow=c(1,2))
-  #   dat <- as.matrix(dat)
-  #   image(1:dim(dat)[1], 1:dim(dat)[2],dat,col = topo.colors(100),axes=FALSE, xlab="Dimension 1", ylab="Dimension 2")
-  #   axis(1, at = seq(10, dim(dat)[1], by = 10))
-  #   axis(2, at = seq(50, dim(dat)[2], by = 50))
-  #   title(main = "Original", font.main = 2)
-  #   plot(xyz.high.xyz[res$cluster!=0,c(2,1)], col=res$cluster[res$cluster!=0]+1L, pch=19, xlim=c(0,dim(dat)[1]), ylim=c(0,dim(dat)[2]), xlab="Dimension 1", ylab="Dimension 2",, main="Clusters"  )
-  #
-  #   dev.off()
-  # }
-  # if(vis){
-  #   par(pty="s", mfrow=c(1,2))
-  #   dat <- as.matrix(dat)
-  #   image(1:dim(dat)[1], 1:dim(dat)[2],dat,col = topo.colors(100),axes=FALSE, xlab="Dimension 1", ylab="Dimension 2")
-  #   axis(1, at = seq(10, dim(dat)[1], by = 10))
-  #   axis(2, at = seq(100, dim(dat)[2], by = 100))
-  #   title(main = "Original", font.main = 2)
-  #   plot(xyz.high.xyz[res$cluster!=0,c(2,1)], col=res$cluster[res$cluster!=0]+1L, pch=19, xlim=c(0,dim(dat)[1]), ylim=c(0,dim(dat)[2]), xlab="Dimension 1", ylab="Dimension 2",, main="Clusters"  )
-  #
-  # }
 
   ## Insert to remove clusters at start time - for Moving window
   output <- list()

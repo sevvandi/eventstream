@@ -37,8 +37,9 @@ arr[25:33,12:20, 20:23] <- 10
 # getting events
 out <- get_clusters_3d(arr, "N", "Nothing", thres=0.985, FALSE)
 # plots
-par(mfrow=c(1,3))
+oldpar <- par(mfrow=c(1,3))
 plot(out$data[,c(1,2)], xlab="x", ylab="y", col=as.factor(out$clusters$cluster))
 plot(out$data[,c(1,3)], xlab="x", ylab="z",col=as.factor(out$clusters$cluster))
 plot(out$data[,c(2,3)], xlab="y", ylab="z",col=as.factor(out$clusters$cluster))
+on.exit(par(oldpar)) 
 }

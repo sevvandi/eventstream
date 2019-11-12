@@ -144,9 +144,10 @@ get_features_per_cluster <- function(dat,normal.stats.splines){
 #' out <- gen_stream(1, sd=15)
 #' zz <- as.matrix(out$data)
 #' sstats <- spline_stats(zz[1:100,])
-#' par(mfrow=c(2,1))
+#' oldpar <- par(mfrow=c(2,1))
 #' image(1:ncol(zz), 1:nrow(zz),t(zz), xlab="Location", ylab="Time" )
 #' plot(sstats[[1]], type="l")
+#' par(oldpar)       
 #'@export
 
 spline_stats <- function(dat){
@@ -303,7 +304,8 @@ get_clusters <- function(dat, flag="N", filename="Nothing", thres=0.95, vis=FALS
   colnames(events2$data) <- c("Location","Time", "Value")
   
   if(vis){
-    par(pty="s", mfrow=c(1,2))
+    oldpar<- par(pty="s", mfrow=c(1,2))
+    on.exit(par(oldpar)) 
     dat <- as.matrix(dat)
     image(1:dim(dat)[1], 1:dim(dat)[2],dat,col = topo.colors(100),axes=FALSE, xlab="Dimension 1", ylab="Dimension 2")
     axis(1, at = seq(10, dim(dat)[1], by = 10))
@@ -330,7 +332,8 @@ get_clusters_2 <- function(dat, flag="N", filename="Nothing", thres=0.95, vis=FA
   res <- dbscan::dbscan(xyz.high.xy, eps = epsilon, minPts = miniPts) # eps = 3, minPts = 7 # with previous work
   if(flag=="Y"){
     jpeg(filename,width = 750, height = 600, quality=100)
-    par(pty="s", mfrow=c(1,2))
+    oldpar <- par(pty="s", mfrow=c(1,2))
+    on.exit(par(oldpar)) 
     dat <- as.matrix(dat)
     image(1:dim(dat)[1], 1:dim(dat)[2], dat, col = topo.colors(100),axes=FALSE, xlab="Dimension 1", ylab="Dimension 2")
     axis(1, at = seq(10, dim(dat)[1], by = 10))
@@ -341,7 +344,8 @@ get_clusters_2 <- function(dat, flag="N", filename="Nothing", thres=0.95, vis=FA
     dev.off()
   }
   if(vis){
-    par(pty="s", mfrow=c(1,2))
+    oldpar <- par(pty="s", mfrow=c(1,2))
+    on.exit(par(oldpar)) 
     dat <- as.matrix(dat)
     image(1:dim(dat)[1], 1:dim(dat)[2],dat,col = topo.colors(100),axes=FALSE, xlab="Dimension 1", ylab="Dimension 2")
     axis(1, at = seq(10, dim(dat)[1], by = 10))

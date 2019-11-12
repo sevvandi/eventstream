@@ -25,7 +25,8 @@ This function computes 4 splines, from median, iqr, mean and standard deviation 
 out <- gen_stream(1, sd=15)
 zz <- as.matrix(out$data)
 sstats <- spline_stats(zz[1:100,])
-par(mfrow=c(2,1))
+oldpar <- par(mfrow=c(2,1))
 image(1:ncol(zz), 1:nrow(zz),t(zz), xlab="Location", ylab="Time" )
 plot(sstats[[1]], type="l")
+par(oldpar)       
 }
