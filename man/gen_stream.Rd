@@ -4,14 +4,12 @@
 \alias{gen_stream}
 \title{Generates a two dimensional data stream containing events of two classes.}
 \usage{
-gen_stream(n, save = FALSE, folder = "None", sd = 1, vis = FALSE)
+gen_stream(n, folder = NULL, sd = 1, vis = FALSE)
 }
 \arguments{
 \item{n}{The number of files to generate. Each file consists of a 350x250 data matrix.}
 
-\item{save}{If \code{TRUE}, the data matrices, event details and the images   are saved as csv and jpeg files respectively.}
-
-\item{folder}{This needs to be set to a local folder, if \code{save=TRUE}. If \code{save=TRUE} the data matrices are saved in \code{folder/data}, the images are saved in \code{folder/pics} and the event details are saved in \code{folder/summary}.  The event details are needed to obtain the class labels of events, when event extraction is done.}
+\item{folder}{If this is set to a local folder, the data matrices are saved in \code{folder/data}, the images are saved in \code{folder/pics} and the event details are saved in \code{folder/summary}.  The event details are needed to obtain the class labels of events, when event extraction is done.}
 
 \item{sd}{This specifies the seed.}
 
@@ -23,7 +21,7 @@ A list with following components:
   \item{\code{details}}{A data frame containing the details of the events: their positions, class labels, etc.. .  This is needed for identifying class labels of events during event extraction.}
 }
 \description{
-This function generates a two-dimensional data stream containing events of two classes. The data stream can be saved as separate files with images by specifying the arguments \code{folder} and \code{save = TRUE}.
+This function generates a two-dimensional data stream containing events of two classes. The data stream can be saved as separate files with images by specifying the arguments \code{folder}.
 }
 \details{
 There are events of two classes in the data matrices : A and B.  Events of class A have only one shape while events of class B have three different shapes, including class A's shape. This was motivated from a real world example. The details of events of each class are given below.

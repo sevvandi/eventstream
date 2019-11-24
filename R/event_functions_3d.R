@@ -211,7 +211,7 @@ get_class_labels_3d <- function(features.this.chunk, start, end, All.details){
 #' plot(out$data[,c(1,2)], xlab="x", ylab="y", col=as.factor(out$clusters$cluster))
 #' plot(out$data[,c(1,3)], xlab="x", ylab="z",col=as.factor(out$clusters$cluster))
 #' plot(out$data[,c(2,3)], xlab="y", ylab="z",col=as.factor(out$clusters$cluster))
-#' on.exit(par(oldpar)) 
+#' par(oldpar)
 
 #'@export
 get_clusters_3d <- function(dat, flag, filename="Nothing", thres=0.95, vis=FALSE, epsilon = 3, miniPts = 15){

@@ -1,10 +1,9 @@
 #' Generates a two dimensional data stream containing events of two classes.
 #'
-#' This function generates a two-dimensional data stream containing events of two classes. The data stream can be saved as separate files with images by specifying the arguments \code{folder} and \code{save = TRUE}.
+#' This function generates a two-dimensional data stream containing events of two classes. The data stream can be saved as separate files with images by specifying the arguments \code{folder}.
 #'
 #' @param n The number of files to generate. Each file consists of a 350x250 data matrix.
-#' @param save If \code{TRUE}, the data matrices, event details and the images   are saved as csv and jpeg files respectively.
-#' @param folder This needs to be set to a local folder, if \code{save=TRUE}. If \code{save=TRUE} the data matrices are saved in \code{folder/data}, the images are saved in \code{folder/pics} and the event details are saved in \code{folder/summary}.  The event details are needed to obtain the class labels of events, when event extraction is done.
+#' @param folder If this is set to a local folder, the data matrices are saved in \code{folder/data}, the images are saved in \code{folder/pics} and the event details are saved in \code{folder/summary}.  The event details are needed to obtain the class labels of events, when event extraction is done.
 #' @param sd This specifies the seed.
 #' @param vis If \code{TRUE}, the images are plotted.
 #'
@@ -37,10 +36,10 @@
 #'@export
 
 
-gen_stream <- function(n,  save=FALSE, folder="None", sd=1, vis=FALSE){
+gen_stream <- function(n,  folder=NULL, sd=1, vis=FALSE){
   set.seed(sd)
 
-  if(save){
+  if(!missing(folder)){
     last_char <- substr(folder, nchar(folder), nchar(folder))
     if(last_char=="/"){
       folder <- substr(folder, 1, nchar(folder)-1)
@@ -103,7 +102,7 @@ gen_stream <- function(n,  save=FALSE, folder="None", sd=1, vis=FALSE){
     details$stream_y <- details$y
 
     pp <- 100 +kk
-    if(save){
+    if(!missing(folder)){
       filename <- paste("Gen_",pp,".csv", sep="")
       write.csv(x,paste(data_folder,filename, sep=""), row.names = FALSE)
     }
@@ -121,7 +120,7 @@ gen_stream <- function(n,  save=FALSE, folder="None", sd=1, vis=FALSE){
     }
   }
 
-  if(save){
+  if(!missing(folder)){
     write.csv(All.details, paste(summary_folder,"Details_Of_Events_In_Take_2_Folder_3.csv", sep=""),row.names=FALSE)
   }
 

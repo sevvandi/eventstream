@@ -4,7 +4,7 @@
 #'
 #' @examples
 #' folder <- tempdir()
-#' out <- gen_stream(2, save=TRUE, folder = folder)
+#' out <- gen_stream(2, folder = folder)
 #' stream <- stream_from_files(paste(folder, "/data", sep=""))
 #' dim(stream)
 #' unlink(folder, recursive = TRUE)

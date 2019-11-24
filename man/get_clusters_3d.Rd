@@ -41,5 +41,5 @@ oldpar <- par(mfrow=c(1,3))
 plot(out$data[,c(1,2)], xlab="x", ylab="y", col=as.factor(out$clusters$cluster))
 plot(out$data[,c(1,3)], xlab="x", ylab="z",col=as.factor(out$clusters$cluster))
 plot(out$data[,c(2,3)], xlab="y", ylab="z",col=as.factor(out$clusters$cluster))
-on.exit(par(oldpar)) 
+par(oldpar)
 }

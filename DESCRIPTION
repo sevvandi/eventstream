@@ -1,6 +1,6 @@
 Package: eventstream
 Type: Package
-Title: Implements Streaming Events and their Early Classification
+Title: Streaming Events and their Early Classification
 Version: 1.0.0
 Maintainer: Sevvandi Kandanaarachchi <sevvandik@gmail.com>
 Authors@R: person("Sevvandi", "Kandanaarachchi", email = "sevvandik@gmail.com",
