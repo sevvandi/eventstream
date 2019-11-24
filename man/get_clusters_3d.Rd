@@ -4,19 +4,12 @@
 \alias{get_clusters_3d}
 \title{Extracts events from a three-dimensional data stream}
 \usage{
-get_clusters_3d(dat, flag, filename = "Nothing", thres = 0.95,
-  vis = FALSE, epsilon = 3, miniPts = 15)
+get_clusters_3d(dat, thres = 0.95, epsilon = 3, miniPts = 15)
 }
 \arguments{
 \item{dat}{The data matrix}
 
-\item{flag}{If \code{Y}, then  event images  are saved as jpeg files.}
-
-\item{filename}{The name of the file of the event images.}
-
 \item{thres}{The cut-off quantile. Default is set to \code{0.95}. Values greater than the quantile will be clustered. The rest is not clustered.}
-
-\item{vis}{If \code{TRUE}, the window data and the extracted events are plotted.}
 
 \item{epsilon}{The \code{eps} parameter in \code{dbscan} function in the package \code{dbscan}}
 
@@ -35,7 +28,7 @@ set.seed(1)
 arr <- array(rnorm(12000),dim=c(40,25,30))
 arr[25:33,12:20, 20:23] <- 10
 # getting events
-out <- get_clusters_3d(arr, "N", "Nothing", thres=0.985, FALSE)
+out <- get_clusters_3d(arr, thres=0.985)
 # plots
 oldpar <- par(mfrow=c(1,3))
 plot(out$data[,c(1,2)], xlab="x", ylab="y", col=as.factor(out$clusters$cluster))

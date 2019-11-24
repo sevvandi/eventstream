@@ -1,6 +1,6 @@
 #' Generates a two dimensional data stream containing events of two classes.
 #'
-#' This function generates a two-dimensional data stream containing events of two classes. The data stream can be saved as separate files with images by specifying the arguments \code{folder}.
+#' This function generates a two-dimensional data stream containing events of two classes. The data stream can be saved as separate files with images by specifying the argument \code{folder}.
 #'
 #' @param n The number of files to generate. Each file consists of a 350x250 data matrix.
 #' @param folder If this is set to a local folder, the data matrices are saved in \code{folder/data}, the images are saved in \code{folder/pics} and the event details are saved in \code{folder/summary}.  The event details are needed to obtain the class labels of events, when event extraction is done.

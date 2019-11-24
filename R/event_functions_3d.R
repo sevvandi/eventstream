@@ -1,6 +1,6 @@
-extract_events_3d <- function(dat,flag="N", filename="nothing", thres, vis=TRUE, tt, epsilon, miniPts){
+extract_events_3d <- function(dat, thres, tt, epsilon, miniPts){
   # Cluster Data
-  output <- get_clusters_3d(dat, flag, filename, thres, vis, epsilon, miniPts)
+  output <- get_clusters_3d(dat, thres, epsilon, miniPts)
   cluster.all <- output$clusters
   xyz.high <- output$data
   if(dim(output$data)[1] >0){
@@ -49,7 +49,7 @@ extract_events_3d <- function(dat,flag="N", filename="nothing", thres, vis=TRUE,
 #' arr <- array(rnorm(12000),dim=c(40,25,30))
 #' arr[25:33,12:20, 20:23] <- 10
 #' # getting events
-#' out <- get_clusters_3d(arr, "N", "Nothing", thres=0.985, FALSE)
+#' out <- get_clusters_3d(arr, thres=0.985)
 #' mean_sd <- stats_3d(arr[1:20,1:6,1:8])
 #' ftrs <- get_features_3d(out$data, out$cluster$cluster, mean_sd, win_size=40, tt=2 )
 #'@export
@@ -205,7 +205,7 @@ get_class_labels_3d <- function(features.this.chunk, start, end, All.details){
 #' arr <- array(rnorm(12000),dim=c(40,25,30))
 #' arr[25:33,12:20, 20:23] <- 10
 #' # getting events
-#' out <- get_clusters_3d(arr, "N", "Nothing", thres=0.985, FALSE)
+#' out <- get_clusters_3d(arr, thres=0.985)
 #' # plots
 #' oldpar <- par(mfrow=c(1,3))
 #' plot(out$data[,c(1,2)], xlab="x", ylab="y", col=as.factor(out$clusters$cluster))
@@ -214,8 +214,8 @@ get_class_labels_3d <- function(features.this.chunk, start, end, All.details){
 #' par(oldpar)
 
 #'@export
-get_clusters_3d <- function(dat, flag, filename="Nothing", thres=0.95, vis=FALSE, epsilon = 3, miniPts = 15){
-  events <- get_clusters_3d_2(dat, flag, filename="Nothing", thres=thres, vis=vis, epsilon = epsilon, miniPts = miniPts)
+get_clusters_3d <- function(dat, thres=0.95, epsilon = 3, miniPts = 15){
+  events <- get_clusters_3d_2(dat, thres=thres, epsilon = epsilon, miniPts = miniPts)
   dat_avg_1 <- apply(dat, 1:2, mean)  
   dat_avg_2 <- apply(dat, 2:3, mean)
 
@@ -293,7 +293,7 @@ get_clusters_3d <- function(dat, flag, filename="Nothing", thres=0.95, vis=FALSE
 
 
 
-get_clusters_3d_2 <- function(dat, flag, filename="Nothing", thres=0.95, vis=FALSE, epsilon = 3, miniPts = 15){
+get_clusters_3d_2 <- function(dat, thres=0.95, epsilon = 3, miniPts = 15){
   dat.x <- 1:dim(dat)[1]
   dat.y <- 1:dim(dat)[2]
   dat.z <- 1:dim(dat)[3]

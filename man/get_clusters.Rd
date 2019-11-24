@@ -16,7 +16,7 @@ get_clusters(dat, flag = "N", filename = "Nothing", thres = 0.95,
 
 \item{thres}{The cut-off quantile. Default is set to \code{0.95}. Values greater than the quantile will be clustered. The rest is not clustered.}
 
-\item{vis}{If \code{TRUE}, the window data and the extracted events are plotted.}
+\item{vis}{If \code{TRUE}, the window data and the extracted events are plotted for a 2D data stream.}
 
 \item{epsilon}{The \code{eps} parameter in \code{dbscan} function in the package \code{dbscan}}
 

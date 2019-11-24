@@ -1,12 +1,12 @@
-extract_event_ftrs_3d <- function(stream, supervised=FALSE, details=NULL, win_size=2, step_size=1, thres=0.98, save=FALSE, folder="None", vis=FALSE, tt, epsilon, miniPts){
+extract_event_ftrs_3d <- function(stream, supervised=FALSE, details=NULL, win_size=2, step_size=1, thres=0.98, tt, epsilon, miniPts){
 
   # The first dimension is always time
 
   supervised=FALSE
   details=NULL
-  save=FALSE
-  folder="None"
-  vis=FALSE
+  # save=FALSE
+  # folder="None"
+  # vis=FALSE
 
 
   if(supervised){
@@ -22,12 +22,12 @@ extract_event_ftrs_3d <- function(stream, supervised=FALSE, details=NULL, win_si
   for(jj in 1:num_times){
     ## Chop window first
     win_dat <- stream[win_st:win_en,,]
-    if(save){
-      file_name <- paste(folder, "Events_", 100000+jj, ".jpg", sep="")
-      dlm_feat <- extract_events_3d(win_dat, "Y", file_name, thres, vis, tt, epsilon, miniPts)
-    }else{
-      dlm_feat <- extract_events_3d(win_dat, "N", file_name, thres, vis, tt, epsilon, miniPts)
-    }
+    # if(save){
+    #   file_name <- paste(folder, "Events_", 100000+jj, ".jpg", sep="")
+    #   dlm_feat <- extract_events_3d(win_dat, "Y", file_name, thres, vis, tt, epsilon, miniPts)
+    # }else{
+      dlm_feat <- extract_events_3d(win_dat,  thres, tt, epsilon, miniPts)
+    #}
 
     if(!is.null(dlm_feat)){
       if(dim(dlm_feat)[1]>0){

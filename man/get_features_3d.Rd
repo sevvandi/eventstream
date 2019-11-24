@@ -44,7 +44,7 @@ set.seed(1)
 arr <- array(rnorm(12000),dim=c(40,25,30))
 arr[25:33,12:20, 20:23] <- 10
 # getting events
-out <- get_clusters_3d(arr, "N", "Nothing", thres=0.985, FALSE)
+out <- get_clusters_3d(arr, thres=0.985)
 mean_sd <- stats_3d(arr[1:20,1:6,1:8])
 ftrs <- get_features_3d(out$data, out$cluster$cluster, mean_sd, win_size=40, tt=2 )
 }
