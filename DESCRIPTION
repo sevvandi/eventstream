@@ -1,7 +1,7 @@
 Package: eventstream
 Type: Package
 Title: Streaming Events and their Early Classification
-Version: 1.0.0
+Version: 0.1.0
 Maintainer: Sevvandi Kandanaarachchi <sevvandik@gmail.com>
 Authors@R: person("Sevvandi", "Kandanaarachchi", email = "sevvandik@gmail.com",
   role = c("aut", "cre"), comment = c(ORCID = "0000-0002-0337-0395"))

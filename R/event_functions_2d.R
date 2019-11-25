@@ -1,6 +1,6 @@
-extract_events <- function(dat,flag="N", filename="nothing", thres, vis=TRUE, tt=10, epsilon=5, miniPts=10, rolling=TRUE){
+extract_events <- function(dat, filename=NULL, thres, vis=TRUE, tt=10, epsilon=5, miniPts=10, rolling=TRUE){
   # Cluster Data
-  output <- get_clusters(dat, flag, filename, thres, vis, epsilon, miniPts, rolling=rolling)
+  output <- get_clusters(dat,  filename, thres, vis, epsilon, miniPts, rolling=rolling)
   cluster.all <- output$clusters
   xyz.high <- output$data
   ll <-  max( ceiling(dim(dat)[1]/5), min( 20, dim(dat)[1] ) )
@@ -215,8 +215,7 @@ get_class_labels <- function(features.this.chunk, start, end, All.details){
 #'
 #'This function extracts events from a two-dimensional (1 spatial x 1 time) data stream.
 #'@param dat The data matrix
-#'@param flag If \code{Y}, then  event images  are saved as jpeg files.
-#'@param filename The name of the file of the event images.
+#'@param filename If set, the figure of extracted events are saved in this name. The \code{filename} needs to include the correct folder and file name. 
 #'@param rolling This parameter is set to \code{TRUE} if rolling windows are considered. 
 #'@inherit extract_event_ftrs
 #'@return A list with following components
@@ -229,8 +228,8 @@ get_class_labels <- function(features.this.chunk, start, end, All.details){
 #'clst <- get_clusters(zz, vis=TRUE)
 #'
 #'@export
-get_clusters <- function(dat, flag="N", filename="Nothing", thres=0.95, vis=FALSE, epsilon =5, miniPts = 10, rolling=TRUE){
-  events <- get_clusters_2(dat, flag=flag, filename=filename, thres=thres, vis=FALSE, epsilon =epsilon, miniPts = miniPts, rolling=rolling)
+get_clusters <- function(dat, filename=NULL, thres=0.95, vis=FALSE, epsilon =5, miniPts = 10, rolling=TRUE){
+  events <- get_clusters_2(dat, filename=filename, thres=thres, vis=FALSE, epsilon =epsilon, miniPts = miniPts, rolling=rolling)
   
   num_pca=1 
   
@@ -320,7 +319,7 @@ get_clusters <- function(dat, flag="N", filename="Nothing", thres=0.95, vis=FALS
 
 
 
-get_clusters_2 <- function(dat, flag="N", filename="Nothing", thres=0.95, vis=FALSE, epsilon =5, miniPts = 10, rolling=TRUE){
+get_clusters_2 <- function(dat, filename=NULL, thres=0.95, vis=FALSE, epsilon =5, miniPts = 10, rolling=TRUE){
   dat.x <- 1:dim(dat)[2]
   dat.y <- 1:dim(dat)[1]
   mesh.xy <- AtmRay::meshgrid(dat.x,dat.y)
@@ -330,7 +329,7 @@ get_clusters_2 <- function(dat, flag="N", filename="Nothing", thres=0.95, vis=FA
   xyz.high <- xyz.dat[xyz.dat[,3] > quantile.int,]
   xyz.high.xy <- xyz.high[,1:2]
   res <- dbscan::dbscan(xyz.high.xy, eps = epsilon, minPts = miniPts) # eps = 3, minPts = 7 # with previous work
-  if(flag=="Y"){
+  if(!is.null(filename)){
     jpeg(filename,width = 750, height = 600, quality=100)
     oldpar <- par(pty="s", mfrow=c(1,2))
     on.exit(par(oldpar)) 

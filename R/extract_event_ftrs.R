@@ -8,7 +8,6 @@
 #'@param win_size The window length of the moving window model, default is set to \code{200}.
 #'@param step_size The window is moved by the \code{step_size}, default is \code{20}.
 #'@param thres The cut-off quantile. Default is set to \code{0.95}. Values greater than the quantile will be clustered. The rest is not clustered.
-#'@param save If  \code{TRUE}, jpegs of window data and the extracted events are saved in \code{folder}.
 #'@param folder If set to a local folder, this is where the jpegs of window data and extracted events are saved for a 2D data stream.
 #'@param vis If \code{TRUE}, the window data and the extracted events are plotted for a 2D data stream.
 #'@param tt Related to event ages. For example if \code{tt=10} then the event ages are \code{10, 20, 30} and \code{40}.
@@ -67,11 +66,11 @@
 #'@importFrom utils read.csv write.csv
 #'@importFrom stats cor model.matrix prcomp
 
-extract_event_ftrs <- function(stream, supervised=FALSE, details=NULL, win_size=200, step_size=20, thres=0.95, save=FALSE, folder="None", vis=FALSE, tt=10, epsilon =5, miniPts = 10, rolling=TRUE){
+extract_event_ftrs <- function(stream, supervised=FALSE, details=NULL, win_size=200, step_size=20, thres=0.95, folder=NULL, vis=FALSE, tt=10, epsilon =5, miniPts = 10, rolling=TRUE){
 
   array_dim <- length(dim(stream))
   if(array_dim==2){
-    all_train_features <- extract_event_ftrs_2d(stream, supervised, details, win_size, step_size, thres, save, folder, vis, tt, epsilon, miniPts, rolling=rolling  )
+    all_train_features <- extract_event_ftrs_2d(stream, supervised, details, win_size, step_size, thres, folder, vis, tt, epsilon, miniPts, rolling=rolling  )
   }else if(array_dim==3){
     all_train_features <- extract_event_ftrs_3d(stream, supervised, details, win_size, step_size, thres, tt, epsilon, miniPts)
   }else{

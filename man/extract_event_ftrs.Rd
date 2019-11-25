@@ -5,9 +5,9 @@
 \title{Extracts events from a data stream and computes event features.}
 \usage{
 extract_event_ftrs(stream, supervised = FALSE, details = NULL,
-  win_size = 200, step_size = 20, thres = 0.95, save = FALSE,
-  folder = "None", vis = FALSE, tt = 10, epsilon = 5,
-  miniPts = 10, rolling = TRUE)
+  win_size = 200, step_size = 20, thres = 0.95, folder = NULL,
+  vis = FALSE, tt = 10, epsilon = 5, miniPts = 10,
+  rolling = TRUE)
 }
 \arguments{
 \item{stream}{A data stream. This can be the output of either the \code{gen_stream} function or the \code{stream_from_files} function.}
@@ -21,8 +21,6 @@ extract_event_ftrs(stream, supervised = FALSE, details = NULL,
 \item{step_size}{The window is moved by the \code{step_size}, default is \code{20}.}
 
 \item{thres}{The cut-off quantile. Default is set to \code{0.95}. Values greater than the quantile will be clustered. The rest is not clustered.}
-
-\item{save}{If  \code{TRUE}, jpegs of window data and the extracted events are saved in \code{folder}.}
 
 \item{folder}{If set to a local folder, this is where the jpegs of window data and extracted events are saved for a 2D data stream.}
 

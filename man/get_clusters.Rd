@@ -4,15 +4,13 @@
 \alias{get_clusters}
 \title{Extracts events from a two-dimensional data stream}
 \usage{
-get_clusters(dat, flag = "N", filename = "Nothing", thres = 0.95,
-  vis = FALSE, epsilon = 5, miniPts = 10, rolling = TRUE)
+get_clusters(dat, filename = NULL, thres = 0.95, vis = FALSE,
+  epsilon = 5, miniPts = 10, rolling = TRUE)
 }
 \arguments{
 \item{dat}{The data matrix}
 
-\item{flag}{If \code{Y}, then  event images  are saved as jpeg files.}
-
-\item{filename}{The name of the file of the event images.}
+\item{filename}{If set, the figure of extracted events are saved in this name. The \code{filename} needs to include the correct folder and file name.}
 
 \item{thres}{The cut-off quantile. Default is set to \code{0.95}. Values greater than the quantile will be clustered. The rest is not clustered.}
 

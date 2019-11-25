@@ -17,13 +17,12 @@ knitr::opts_chunk$set(
 
   [![Travis build status](https://travis-ci.org/sevvandi/eventstream.svg?branch=master)](https://travis-ci.org/sevvandi/eventstream)
 
-The goal of *eventstream* is to extract and classify events in data streams. For details see [@eventstream].  The R scripts used in this paper are at  https://github.com/sevvandi/eventstream_paper .
+The goal of *eventstream* is to extract and classify events in contiguous spatio-temporal data streams of 2 or 3 dimensions. For details see [@eventstream].  
 
-This package is still under development and this repository contains a development version of the R package *eventstream*.
 
 ## Installation
 
-You can install *eventstream* from github with:
+You can install the development version of *eventstream* from github with:
 
 
 ``` r
@@ -31,15 +30,18 @@ You can install *eventstream* from github with:
 devtools::install_github("sevvandi/eventstream")
 ```
 
-## Generate data
+## Generate data - 2D
 
 This is an example of a data stream you can generate with *eventstream*. 
-The extracted events are plotted for the first 2 windows using a window size of 200 and a step size of 50. 
 
-```{r example}
+
+```{r getdat}
 library("eventstream")
 library("AtmRay")
 library("ggplot2")
+library("raster")
+library("maps")
+
 str <- gen_stream(3, sd=1)
 zz <- str$data
 dat <- as.data.frame(t(zz))
@@ -50,11 +52,63 @@ xyz.dat <- cbind(as.vector(mesh.xy$x), as.vector(mesh.xy$y), as.vector(as.matrix
 xyz.dat <- as.data.frame(xyz.dat)
 colnames(xyz.dat) <- c("Time", "Location", "Value")
 ggplot(xyz.dat, aes(Time, Location)) + geom_raster(aes(fill=Value)) +   scale_fill_gradientn(colours=topo.colors(12)) + theme_bw()
-
-zz2 <- zz[1:250,]
-ftrs <- extract_event_ftrs(zz2,win_size=200, step_size = 50, vis=TRUE)
 ```
 
+## Extract events - 2D
+The extracted events are plotted for the first 2 windows using a window size of 200 and a step size of 50. 
 
+```{r extract}
+zz2 <- zz[1:250,]
+ftrs <- extract_event_ftrs(zz2, rolling=FALSE, win_size=200, step_size = 50, vis=TRUE)
+```
+
+## Extract events - 3D
+To extract 3D events we use the NO2 data from NASA's [NEO website](https://neo.sci.gsfc.nasa.gov/view.php?datasetId=AURA_NO2_M). 
+```{r extract3D}
+data(NO2_2019)
+dim(NO2_2019)
+ftrs_2019 <- extract_event_ftrs(NO2_2019, thres=0.97, epsilon = 2, miniPts = 20, win_size=4, step_size=1, rolling=TRUE, tt=1, vis=FALSE)
+dim(ftrs_2019)
+ftrs_2019[1, , ]
+```
+The features contain `r dim(ftrs_2019)[1]` events, `r dim(ftrs_2019)[2]` features, and `r dim(ftrs_2019)[3]` age brackets for the events. 
+
+
+First, let us visualize NO2 data for March 2019.
+```{r vis2D1}
+data(NO2_2019)
+r <- raster(NO2_2019[1, ,],xmn=-179.5,xmx=179.5,ymn=-89.5,ymx=89.5,crs="+proj=longlat +datum=WGS84")
+plot(r, legend=F, main="2019 March NO2 levels")
+map("world",add=T, fill=FALSE, col="darkgrey")
+```
+
+## Visualize 2D cross sections of 3D events
+Next we extract 3D events from March - June 2019. Then we visualize 2D cross sections of these 3D events for March 2019.
+```{r vis2D2}
+data(NO2_2019)
+output <- get_clusters_3d(NO2_2019, thres=0.97, epsilon = 2, miniPts = 20, vis=FALSE)
+cluster.all <- output$clusters
+xyz.high <- output$data
+all_no2_clusters_march <- xyz.high[xyz.high[,1]==1,-1]
+all_cluster_ids_march <- cluster.all$cluster[xyz.high[,1]==1]
+cluster_ids_march <- all_cluster_ids_march[all_cluster_ids_march!=0]
+no2_clusters_march <- all_no2_clusters_march[all_cluster_ids_march!=0,]
+
+march_map <- matrix(0, nrow=180, ncol=360)
+set.seed(123)
+new_ids <- sample( length(unique(cluster_ids_march)),length(unique(cluster_ids_march)) )
+new_cluster_ids <- cluster_ids_march
+for(i in 1:length(unique(cluster_ids_march)) ) {
+  new_cluster_ids[ cluster_ids_march== unique(cluster_ids_march)[i]] <- new_ids[i]
+}
+
+march_map[no2_clusters_march[,1:2]] <- new_cluster_ids
+r <- raster(march_map,xmn=-179.5,xmx=179.5,ymn=-89.5,ymx=89.5,crs="+proj=longlat +datum=WGS84")
+plot(r, legend=F)
+
+map("world",add=T, fill=FALSE, col="darkgrey")
+```
+
+We see NO2 clusters  extracted for March 2019 in the above figure. Each colour represents a single cluster.
 
 ## References
