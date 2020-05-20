@@ -19,6 +19,7 @@ gen_stream(n, folder = NULL, sd = 1, vis = FALSE)
 A list with following components:
   \item{\code{data}}{The data stream returned as a data frame.}
   \item{\code{details}}{A data frame containing the details of the events: their positions, class labels, etc.. .  This is needed for identifying class labels of events during event extraction.}
+  \item{\code{eventlabs}}{A matrix with 1 at event locations and 0 elsewhere. }
 }
 \description{
 This function generates a two-dimensional data stream containing events of two classes. The data stream can be saved as separate files with images by specifying the argument \code{folder}.

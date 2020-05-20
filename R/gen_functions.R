@@ -158,17 +158,25 @@ set_parameters <- function(){
 
 }
 
-
 create_picture <- function(details, pl){
   x <- matrix(rnorm(300*200),ncol=200)
   x2 <- matrix(rnorm(350*250),ncol=250)
+  # Added to keep track of events - start
+  x2ori <- x2
+  eventlabs <- matrix(0, nrow=350, ncol=250)
+  # Added to keep track of events - end
   num.objs <- length(details$class)
   for(i in 1:num.objs){
     oo <- create_class(details$class[i],details$subClass[i],details$length[i], details$width[i], details$x[i], details$y[i])
-
+    
     x2 <- give_values(x2,details$class[i],details$subClass[i],oo)
   }
-
+  
+  # Added to keep track of events - start
+  eventinds <- which(x2ori!=x2) 
+  eventlabs[eventinds] <- 1
+  # Added to keep track of events - end
+  
   if(details$rev==1){
     x2 <- t(x2)
     x2 <- apply(x2,2,rev)
@@ -177,8 +185,32 @@ create_picture <- function(details, pl){
   if(pl){
     image(1:nrow(x2), 1:ncol(x2),x2, xlab="Time", ylab="Location")
   }
-  return(x2)
+  out <- list()
+  out$x <- x2
+  out$eventlabs <- eventlabs
+  return(out)
 }
+
+# create_picture <- function(details, pl){
+#   x <- matrix(rnorm(300*200),ncol=200)
+#   x2 <- matrix(rnorm(350*250),ncol=250)
+#   num.objs <- length(details$class)
+#   for(i in 1:num.objs){
+#     oo <- create_class(details$class[i],details$subClass[i],details$length[i], details$width[i], details$x[i], details$y[i])
+# 
+#     x2 <- give_values(x2,details$class[i],details$subClass[i],oo)
+#   }
+# 
+#   if(details$rev==1){
+#     x2 <- t(x2)
+#     x2 <- apply(x2,2,rev)
+#     x2 <- t(x2)
+#   }
+#   if(pl){
+#     image(1:nrow(x2), 1:ncol(x2),x2, xlab="Time", ylab="Location")
+#   }
+#   return(x2)
+# }
 
 
 create_class <-  function(class,subClass,leng,width,x,y){

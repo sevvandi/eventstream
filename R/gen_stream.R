@@ -25,6 +25,7 @@
 #'A list with following components:
 #'   \item{\code{data}}{The data stream returned as a data frame.}
 #'   \item{\code{details}}{A data frame containing the details of the events: their positions, class labels, etc.. .  This is needed for identifying class labels of events during event extraction.}
+#'   \item{\code{eventlabs}}{A matrix with 1 at event locations and 0 elsewhere. }
 #'
 #'
 #' @examples
@@ -83,7 +84,8 @@ gen_stream <- function(n,  folder=NULL, sd=1, vis=FALSE){
   ll <- 1 # this index is for the data frame which has all.details
   for(kk in 1:n){
     details <- set_parameters()
-    x <- create_picture(details, vis)
+    xobj <- create_picture(details, vis)
+    x <- xobj$x
 
     pp <- 100 +kk
     filename <- paste("Gen_",pp,".jpg", sep="")
@@ -126,6 +128,7 @@ gen_stream <- function(n,  folder=NULL, sd=1, vis=FALSE){
 
   out$data <- xx
   out$details <- All.details
+  out$eventlabs <- xobj$eventlabs
   return(out)
 }
 
