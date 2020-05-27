@@ -158,7 +158,7 @@ set_parameters <- function(){
 
 }
 
-create_picture <- function(details, pl){
+create_picture <- function(details, pl, muAB, sdAB){
   x <- matrix(rnorm(300*200),ncol=200)
   x2 <- matrix(rnorm(350*250),ncol=250)
   # Added to keep track of events - start
@@ -169,7 +169,7 @@ create_picture <- function(details, pl){
   for(i in 1:num.objs){
     oo <- create_class(details$class[i],details$subClass[i],details$length[i], details$width[i], details$x[i], details$y[i])
     
-    x2 <- give_values(x2,details$class[i],details$subClass[i],oo)
+    x2 <- give_values(x2,details$class[i],details$subClass[i],oo, muAB, sdAB)
   }
   
   # Added to keep track of events - start
@@ -252,9 +252,10 @@ fix_boudary <- function(oo){
 }
 
 
-give_values <- function(x,class, subClass ,oo){
-  muAB <- c(4,3)
-  sdAB <- c(2,3)
+give_values <- function(x,class, subClass ,oo, muAB, sdAB){
+  # Commented as muAB and sdAB are made parameters of genstream
+  # muAB <- c(4,3)
+  # sdAB <- c(2,3)
   if(class=="A"){
     x<- give_varying_values_class(x,oo, muAB[1], sdAB[1], "A")
   }else{
