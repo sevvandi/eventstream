@@ -128,3 +128,28 @@ tune_cpdbee_3D <- function(x, cl, alpha_min = 0.95, alpha_max = 0.98, alpha_step
   obj$all <- jaccard_inds
   return(obj)
 }
+
+
+
+calculate_Jaccard_index <- function(x, cl, alpha = 0.95, epsilon = 6, minPts = 10, vis=TRUE){
+  # x is the original data
+  # x is an mxn matrix
+  # cl contains the actual locations of clusters
+  # cl has two columns - first column is the x coordinate, second column is the y coordinate
+  if(is.null(cl)){
+    stop("You need to put in the event locations!")
+  }
+  out <- get_clusters(x, filename = NULL, thres = alpha, vis = vis,
+                      epsilon = epsilon, miniPts = minPts, rolling = FALSE)
+  # Compute Jaccard Index
+  output <- as.data.frame(out$data[ ,1:2])
+  cl <- as.data.frame(cl)
+  match_rows <- dplyr::inner_join(output, cl)
+  if(is.null(match_rows)){
+    jaccard_ind <- 0
+  }else{
+    jaccard_ind <- dim(match_rows)[1]/(dim(output)[1] + dim(cl)[1] - dim(match_rows)[1])
+  }
+  return(jaccard_ind)
+}
+

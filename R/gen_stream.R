@@ -111,8 +111,10 @@ gen_stream <- function(n,  folder=NULL, sd=1, vis=FALSE){
 
     if(kk==1){
       xx <- x
+      eventlabs <- xobj$eventlabs
     }else{
       xx <- rbind.data.frame(xx, x)
+      eventlabs <- rbind.data.frame(eventlabs, xobj$eventlabs)
     }
 
     for(i in 1:length(details$class)){
@@ -128,7 +130,7 @@ gen_stream <- function(n,  folder=NULL, sd=1, vis=FALSE){
 
   out$data <- xx
   out$details <- All.details
-  out$eventlabs <- xobj$eventlabs
+  out$eventlabs <- eventlabs
   return(out)
 }
 
