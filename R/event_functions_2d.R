@@ -322,7 +322,7 @@ get_clusters <- function(dat, filename=NULL, thres=0.95, vis=FALSE, epsilon =5, 
 get_clusters_2 <- function(dat, filename=NULL, thres=0.95, vis=FALSE, epsilon =5, miniPts = 10, rolling=TRUE){
   dat.x <- 1:dim(dat)[2]
   dat.y <- 1:dim(dat)[1]
-  mesh.xy <- AtmRay::meshgrid(dat.x,dat.y)
+  mesh.xy <- meshgrid(dat.x,dat.y)
   xyz.dat <- cbind(as.vector(mesh.xy$x), as.vector(mesh.xy$y), as.vector(as.matrix(dat)) )
 
   quantile.int <- quantile(as.matrix(dat),probs=thres) # , na.rm=TRUE

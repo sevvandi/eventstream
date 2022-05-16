@@ -4,8 +4,17 @@
 \alias{td_logistic}
 \title{Classification with incomplete-event-classifier}
 \usage{
-td_logistic(t, X, Y, lambda = 1, scale = TRUE, num_bins = 4,
-  quad = TRUE, interact = FALSE, logg = TRUE)
+td_logistic(
+  t,
+  X,
+  Y,
+  lambda = 1,
+  scale = TRUE,
+  num_bins = 4,
+  quad = TRUE,
+  interact = FALSE,
+  logg = TRUE
+)
 }
 \arguments{
 \item{t}{The age of events.}

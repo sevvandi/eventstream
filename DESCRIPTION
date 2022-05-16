@@ -1,7 +1,7 @@
 Package: eventstream
 Type: Package
 Title: Streaming Events and their Early Classification
-Version: 0.1.0
+Version: 0.1.1
 Maintainer: Sevvandi Kandanaarachchi <sevvandik@gmail.com>
 Authors@R: person("Sevvandi", "Kandanaarachchi", email = "sevvandik@gmail.com",
   role = c("aut", "cre"), comment = c(ORCID = "0000-0002-0337-0395"))
@@ -17,13 +17,12 @@ Imports:
     abind,
     tensorA,
     glmnet,
-    AtmRay,
     dbscan,
     MASS,
     changepoint,
     dplyr
 URL: https://sevvandi.github.io/eventstream/index.html
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.2
 Suggests: 
     knitr,
     rmarkdown

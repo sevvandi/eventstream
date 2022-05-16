@@ -4,10 +4,19 @@
 \alias{tune_cpdbee_2D}
 \title{Tunes 2D event detection using labeled data}
 \usage{
-tune_cpdbee_2D(x, cl, alpha_min = 0.95, alpha_max = 0.98,
-  alpha_step = 0.01, epsilon_min = 2, epsilon_max = 12,
-  epsilon_step = 2, minPts_min = 4, minPts_max = 12,
-  minPts_step = 2)
+tune_cpdbee_2D(
+  x,
+  cl,
+  alpha_min = 0.95,
+  alpha_max = 0.98,
+  alpha_step = 0.01,
+  epsilon_min = 2,
+  epsilon_max = 12,
+  epsilon_step = 2,
+  minPts_min = 4,
+  minPts_max = 12,
+  minPts_step = 2
+)
 }
 \arguments{
 \item{x}{The data in an mxn matrix or dataframe.}

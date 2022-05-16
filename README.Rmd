@@ -15,7 +15,9 @@ knitr::opts_chunk$set(
 ```
 # eventstream
 
-  [![Travis build status](https://travis-ci.org/sevvandi/eventstream.svg?branch=master)](https://travis-ci.org/sevvandi/eventstream)
+ <!-- badges: start -->
+  [![R-CMD-check](https://github.com/sevvandi/eventstream/workflows/R-CMD-check/badge.svg)](https://github.com/sevvandi/eventstream/actions)
+  <!-- badges: end -->
 
 The goal of *eventstream* is to extract and classify events in contiguous spatio-temporal data streams of 2 or 3 dimensions. For details see [@eventstream].  
 
@@ -37,7 +39,6 @@ This is an example of a data stream you can generate with *eventstream*.
 
 ```{r getdat}
 library("eventstream")
-library("AtmRay")
 library("ggplot2")
 library("raster")
 library("maps")
@@ -47,7 +48,7 @@ zz <- str$data
 dat <- as.data.frame(t(zz))
 dat.x <- 1:dim(dat)[2]
 dat.y <- 1:dim(dat)[1]
-mesh.xy <- AtmRay::meshgrid(dat.x,dat.y)
+mesh.xy <- eventstream:::meshgrid(dat.x,dat.y)
 xyz.dat <- cbind(as.vector(mesh.xy$x), as.vector(mesh.xy$y), as.vector(as.matrix(dat)) )
 xyz.dat <- as.data.frame(xyz.dat)
 colnames(xyz.dat) <- c("Time", "Location", "Value")
@@ -86,7 +87,7 @@ map("world",add=T, fill=FALSE, col="darkgrey")
 Next we extract 3D events from March - June 2019. Then we visualize 2D cross sections of these 3D events for March 2019.
 ```{r vis2D2}
 data(NO2_2019)
-output <- get_clusters_3d(NO2_2019, thres=0.97, epsilon = 2, miniPts = 20, vis=FALSE)
+output <- get_clusters_3d(NO2_2019, thres=0.97, epsilon = 2, miniPts = 20)
 cluster.all <- output$clusters
 xyz.high <- output$data
 all_no2_clusters_march <- xyz.high[xyz.high[,1]==1,-1]

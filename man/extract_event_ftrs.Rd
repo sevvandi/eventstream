@@ -4,10 +4,20 @@
 \alias{extract_event_ftrs}
 \title{Extracts events from a data stream and computes event features.}
 \usage{
-extract_event_ftrs(stream, supervised = FALSE, details = NULL,
-  win_size = 200, step_size = 20, thres = 0.95, folder = NULL,
-  vis = FALSE, tt = 10, epsilon = 5, miniPts = 10,
-  rolling = TRUE)
+extract_event_ftrs(
+  stream,
+  supervised = FALSE,
+  details = NULL,
+  win_size = 200,
+  step_size = 20,
+  thres = 0.95,
+  folder = NULL,
+  vis = FALSE,
+  tt = 10,
+  epsilon = 5,
+  miniPts = 10,
+  rolling = TRUE
+)
 }
 \arguments{
 \item{stream}{A data stream. This can be the output of either the \code{gen_stream} function or the \code{stream_from_files} function.}

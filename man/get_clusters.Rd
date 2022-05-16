@@ -4,8 +4,15 @@
 \alias{get_clusters}
 \title{Extracts events from a two-dimensional data stream}
 \usage{
-get_clusters(dat, filename = NULL, thres = 0.95, vis = FALSE,
-  epsilon = 5, miniPts = 10, rolling = TRUE)
+get_clusters(
+  dat,
+  filename = NULL,
+  thres = 0.95,
+  vis = FALSE,
+  epsilon = 5,
+  miniPts = 10,
+  rolling = TRUE
+)
 }
 \arguments{
 \item{dat}{The data matrix}

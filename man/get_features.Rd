@@ -4,8 +4,13 @@
 \alias{get_features}
 \title{Computes event-features}
 \usage{
-get_features(dat.xyz, res.cluster, normal.stats.splines, win_size = 200,
-  tt = 10)
+get_features(
+  dat.xyz,
+  res.cluster,
+  normal.stats.splines,
+  win_size = 200,
+  tt = 10
+)
 }
 \arguments{
 \item{dat.xyz}{The data in a cluster friendly format. The first two columns have \code{y} and \code{x} positions with the third column having the pixel value of that position.}

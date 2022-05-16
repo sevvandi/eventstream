@@ -4,7 +4,8 @@
 \name{real_details}
 \alias{real_details}
 \title{A dataset containing the details of class A events in the dataset real_stream.}
-\format{A data frame with 4 rows and 3 variables:
+\format{
+A data frame with 4 rows and 3 variables:
 \describe{
  \item{filename}{Orignal file name}
  \item{class}{class of event, A or B}
@@ -12,7 +13,8 @@
  \item{file_y}{\code{x} coordinate of file, relating to the start time of event }
  \item{stream_x}{\code{x} coordinate of \code{real_stream}, relating to the start time of event }
  \item{stream_y}{\code{y} coordinate of \code{real_stream}, relating to the location of event}
-}}
+}
+}
 \usage{
 real_details
 }

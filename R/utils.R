@@ -57,3 +57,9 @@ meshgrid3d <- function(xx,yy,zz){
   out[,3] <- rep(zz,each=xnum*ynum)
   return(out)
 }
+
+# Taken from AtmRay R package after getting email from Kurt Hornik
+# asking to fix reverse dependencies
+meshgrid <- function(a,b){
+    return(list( x=outer(b*0,a,FUN="+"), y=outer(b,a*0,FUN="+") ))
+}

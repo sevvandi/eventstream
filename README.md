@@ -1,30 +1,32 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-eventstream
-===========
 
-[![Travis build status](https://travis-ci.org/sevvandi/eventstream.svg?branch=master)](https://travis-ci.org/sevvandi/eventstream)
+# eventstream
 
-The goal of *eventstream* is to extract and classify events in contiguous spatio-temporal data streams of 2 or 3 dimensions. For details see (Kandanaarachchi, Hyndman, and Smith-Miles 2018).
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/sevvandi/eventstream/workflows/R-CMD-check/badge.svg)](https://github.com/sevvandi/eventstream/actions)
+<!-- badges: end -->
 
-Installation
-------------
+The goal of *eventstream* is to extract and classify events in
+contiguous spatio-temporal data streams of 2 or 3 dimensions. For
+details see (Kandanaarachchi, Hyndman, and Smith-Miles 2020).
 
-You can install the development version of *eventstream* from github with:
+## Installation
+
+You can install the development version of *eventstream* from github
+with:
 
 ``` r
 #install.packages("devtools")
 devtools::install_github("sevvandi/eventstream")
 ```
 
-Generate data - 2D
-------------------
+## Generate data - 2D
 
 This is an example of a data stream you can generate with *eventstream*.
 
 ``` r
 library("eventstream")
-library("AtmRay")
 library("ggplot2")
 library("raster")
 #> Loading required package: sp
@@ -35,7 +37,7 @@ zz <- str$data
 dat <- as.data.frame(t(zz))
 dat.x <- 1:dim(dat)[2]
 dat.y <- 1:dim(dat)[1]
-mesh.xy <- AtmRay::meshgrid(dat.x,dat.y)
+mesh.xy <- eventstream:::meshgrid(dat.x,dat.y)
 xyz.dat <- cbind(as.vector(mesh.xy$x), as.vector(mesh.xy$y), as.vector(as.matrix(dat)) )
 xyz.dat <- as.data.frame(xyz.dat)
 colnames(xyz.dat) <- c("Time", "Location", "Value")
@@ -44,10 +46,10 @@ ggplot(xyz.dat, aes(Time, Location)) + geom_raster(aes(fill=Value)) +   scale_fi
 
 <img src="man/figures/README-getdat-1.png" width="100%" />
 
-Extract events - 2D
--------------------
+## Extract events - 2D
 
-The extracted events are plotted for the first 2 windows using a window size of 200 and a step size of 50.
+The extracted events are plotted for the first 2 windows using a window
+size of 200 and a step size of 50.
 
 ``` r
 zz2 <- zz[1:250,]
@@ -56,10 +58,10 @@ ftrs <- extract_event_ftrs(zz2, rolling=FALSE, win_size=200, step_size = 50, vis
 
 <img src="man/figures/README-extract-1.png" width="100%" /><img src="man/figures/README-extract-2.png" width="100%" />
 
-Extract events - 3D
--------------------
+## Extract events - 3D
 
-To extract 3D events we use the NO2 data from NASA's [NEO website](https://neo.sci.gsfc.nasa.gov/view.php?datasetId=AURA_NO2_M).
+To extract 3D events we use the NO2 data from NASA’s [NEO
+website](https://neo.sci.gsfc.nasa.gov/view.php?datasetId=AURA_NO2_M).
 
 ``` r
 data(NO2_2019)
@@ -89,7 +91,8 @@ ftrs_2019[1, , ]
 #> Class                  0.0000000     0.0000000     0.0000000     0.0000000
 ```
 
-The features contain 17 events, 17 features, and 4 age brackets for the events.
+The features contain 17 events, 17 features, and 4 age brackets for the
+events.
 
 First, let us visualize NO2 data for March 2019.
 
@@ -102,14 +105,14 @@ map("world",add=T, fill=FALSE, col="darkgrey")
 
 <img src="man/figures/README-vis2D1-1.png" width="100%" />
 
-Visualize 2D cross sections of 3D events
-----------------------------------------
+## Visualize 2D cross sections of 3D events
 
-Next we extract 3D events from March - June 2019. Then we visualize 2D cross sections of these 3D events for March 2019.
+Next we extract 3D events from March - June 2019. Then we visualize 2D
+cross sections of these 3D events for March 2019.
 
 ``` r
 data(NO2_2019)
-output <- get_clusters_3d(NO2_2019, thres=0.97, epsilon = 2, miniPts = 20, vis=FALSE)
+output <- get_clusters_3d(NO2_2019, thres=0.97, epsilon = 2, miniPts = 20)
 cluster.all <- output$clusters
 xyz.high <- output$data
 all_no2_clusters_march <- xyz.high[xyz.high[,1]==1,-1]
@@ -134,9 +137,19 @@ map("world",add=T, fill=FALSE, col="darkgrey")
 
 <img src="man/figures/README-vis2D2-1.png" width="100%" />
 
-We see NO2 clusters extracted for March 2019 in the above figure. Each colour represents a single cluster.
+We see NO2 clusters extracted for March 2019 in the above figure. Each
+colour represents a single cluster.
 
-References
-----------
+## References
 
-Kandanaarachchi, Sevvandi, Rob J Hyndman, and Kate Smith-Miles. 2018. “Early Classification of Spatio-Temporal Events Using Partial Information.” Working Paper 25/18. Department of Econometrics; Business Statistics, Monash University. <https://www.researchgate.net/publication/329773142_Early_classification_of_spatio-temporal_events_using_partial_information>.
+<div id="refs" class="references csl-bib-body hanging-indent">
+
+<div id="ref-eventstream" class="csl-entry">
+
+Kandanaarachchi, Sevvandi, Rob J Hyndman, and Kate Smith-Miles. 2020.
+“Early Classification of Spatio-Temporal Events Using Partial
+Information.” *PLoS ONE* 15 (8): e0236331.
+
+</div>
+
+</div>

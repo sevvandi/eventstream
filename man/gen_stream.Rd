@@ -4,8 +4,14 @@
 \alias{gen_stream}
 \title{Generates a two dimensional data stream containing events of two classes.}
 \usage{
-gen_stream(n, folder = NULL, sd = 1, vis = FALSE, muAB = c(4, 3),
-  sdAB = c(2, 3))
+gen_stream(
+  n,
+  folder = NULL,
+  sd = 1,
+  vis = FALSE,
+  muAB = c(4, 3),
+  sdAB = c(2, 3)
+)
 }
 \arguments{
 \item{n}{The number of files to generate. Each file consists of a 350x250 data matrix.}

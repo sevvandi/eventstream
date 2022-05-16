@@ -4,7 +4,9 @@
 \name{real_stream}
 \alias{real_stream}
 \title{A data stream from a real world application}
-\format{A matrix with 587 rows and 379 columns.}
+\format{
+A matrix with 587 rows and 379 columns.
+}
 \usage{
 real_stream
 }
