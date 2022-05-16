@@ -61,7 +61,7 @@ ftrs <- extract_event_ftrs(zz2, rolling=FALSE, win_size=200, step_size = 50, vis
 ## Extract events - 3D
 
 To extract 3D events we use the NO2 data from NASA’s [NEO
-website](https://neo.sci.gsfc.nasa.gov/view.php?datasetId=AURA_NO2_M).
+website](https://neo.gsfc.nasa.gov/).
 
 ``` r
 data(NO2_2019)
