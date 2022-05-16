@@ -50,6 +50,7 @@ A list with following components
 This function finds best parameters for 3D event detection using labeled data.
 }
 \examples{
+\dontrun{
 set.seed(1)
 arr <- array(rnorm(12000),dim=c(40,25,30))
 arr[25:33,12:20, 20:23] <- 10
@@ -57,4 +58,5 @@ arr[25:33,12:20, 20:23] <- 10
 out <- get_clusters_3d(arr, thres=0.985) 
 out <- tune_cpdbee_3D(arr, out$data[ ,1:3])
 out$best
+}
 }

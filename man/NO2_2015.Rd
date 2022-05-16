@@ -13,7 +13,7 @@ An array of 4 x 179 x 360 dimensions.
 }
 }
 \source{
-\url{https://neo.sci.gsfc.nasa.gov/view.php?datasetId=AURA_NO2_M}
+\url{https://neo.gsfc.nasa.gov/}
 }
 \usage{
 NO2_2015

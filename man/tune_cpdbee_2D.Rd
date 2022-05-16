@@ -50,10 +50,14 @@ A list with following components
 This function finds best parameters for 2D event detection using labeled data.
 }
 \examples{
+\dontrun{
 out <- gen_stream(1, sd=15)
 zz <- as.matrix(out$data)
-clst <- get_clusters(zz, filename = NULL, thres = 0.95, vis = TRUE, epsilon = 5, miniPts = 10, rolling = FALSE)
+clst <- get_clusters(zz, filename = NULL, thres = 0.95, 
+                    vis = TRUE, epsilon = 5, miniPts = 10, 
+                    rolling = FALSE)
 clst_loc <- clst$data[ ,1:2]
 out <- tune_cpdbee_2D(zz, clst_loc)
 out$best
+}
 }

@@ -19,12 +19,16 @@
 #'\item{\code{all}}{All parameter values used and the associated Jaccard Index values.}
 #'
 #'@examples
+#'\dontrun{
 #'out <- gen_stream(1, sd=15)
 #'zz <- as.matrix(out$data)
-#'clst <- get_clusters(zz, filename = NULL, thres = 0.95, vis = TRUE, epsilon = 5, miniPts = 10, rolling = FALSE)
+#'clst <- get_clusters(zz, filename = NULL, thres = 0.95, 
+#'                     vis = TRUE, epsilon = 5, miniPts = 10, 
+#'                     rolling = FALSE)
 #'clst_loc <- clst$data[ ,1:2]
 #'out <- tune_cpdbee_2D(zz, clst_loc)
 #'out$best
+#'}
 #'@export
 tune_cpdbee_2D <- function(x, cl, alpha_min = 0.95, alpha_max = 0.98, alpha_step = 0.01, epsilon_min = 2, epsilon_max = 12, epsilon_step = 2, minPts_min = 4, minPts_max = 12, minPts_step = 2){
   # x is the original data
@@ -77,6 +81,7 @@ tune_cpdbee_2D <- function(x, cl, alpha_min = 0.95, alpha_max = 0.98, alpha_step
 #'@inherit tune_cpdbee_2D
 #'
 #'@examples
+#'\dontrun{
 #'set.seed(1)
 #'arr <- array(rnorm(12000),dim=c(40,25,30))
 #'arr[25:33,12:20, 20:23] <- 10
@@ -84,6 +89,7 @@ tune_cpdbee_2D <- function(x, cl, alpha_min = 0.95, alpha_max = 0.98, alpha_step
 #'out <- get_clusters_3d(arr, thres=0.985) 
 #'out <- tune_cpdbee_3D(arr, out$data[ ,1:3])
 #'out$best
+#'}
 #'@export
 tune_cpdbee_3D <- function(x, cl, alpha_min = 0.95, alpha_max = 0.98, alpha_step = 0.01, epsilon_min = 2, epsilon_max = 12, epsilon_step = 2, minPts_min = 8, minPts_max = 16, minPts_step = 2){
   # x is the original data
