@@ -3,11 +3,13 @@
 #' @param folder The folder with the data files.
 #'
 #' @examples
+#' \dontrun{
 #' folder <- tempdir()
 #' out <- gen_stream(2, folder = folder)
 #' stream <- stream_from_files(paste(folder, "/data", sep=""))
 #' dim(stream)
 #' unlink(folder, recursive = TRUE)
+#' }
 #'@seealso \code{\link{gen_stream}}.
 #'@export
 
